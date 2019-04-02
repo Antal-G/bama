@@ -1,0 +1,2 @@
+# bama
+kamu BAMA oldal
