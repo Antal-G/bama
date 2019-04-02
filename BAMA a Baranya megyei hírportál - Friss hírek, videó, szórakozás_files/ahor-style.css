@@ -1,0 +1,246 @@
+/* HOROSZKOP OLDALAK */
+.horoszkop-tablo a { color: #5a4daa; }
+.horoszkop-tablo a:hover { color: #312a5d; }
+
+.horoszkop-tablo .title-container { width: 100%; display: block; text-align: center; text-transform: uppercase; margin-bottom: 15px; background: url(images/title_pattern.png) center 94% repeat-x; }
+.horoszkop-tablo .title-container .title { display: inline-block; padding: 19px 29px; background-color: #f6317b; color: #fff; font-size: 18px; margin-bottom: 0; }
+
+.horoszkop-tablo h2 { margin: 40px 0 50px 0; }
+.horoszkop-tablo h2.main-title { margin: 40px 0 50px 0; padding: 0 20px; }
+
+.horoszkop-tablo .post-content { background-color: #fff; padding: 20px; margin-bottom: 30px; }
+.horoszkop-tablo .post-content.max-width { padding-left: 0; padding-right: 0; }
+.horoszkop-tablo .post-content.border-top { border-top: 1px solid #e8e8e8; }
+
+.horoszkop-tablo .link-to-all { color: #5a4daa; font-size: 12px; text-transform: uppercase; margin-bottom: 20px; }
+
+.osszefoglalo { display: inline-block; width: 100%; margin-bottom: 15px; margin-top: 20px; }
+.jegy-adatok { float: left; display: block; margin: 28px 80px 0 0; }
+.jegy-adatok:last-child { margin-right: 0; }
+.jegy-adatok.col-kep { margin-top: 0; margin-right: 12px; }
+.jegy-adatok .title { display: block; color: #868686; text-transform: uppercase; clear: both; font-size: 11px; margin-bottom: 15px; font-weight: 600; line-height: 100%; letter-spacing: 2px; }
+.jegy-adatok .data { display: block; color: #1a005d; font-size: 15px; font-weight: 600; line-height: 100%; }
+
+.jegy-adatok.col-neve .title { color: #1a005d; font-size: 18px; margin-bottom: 12px; }
+.jegy-adatok.col-neve .data { color: #868686; font-size: 11px; letter-spacing: 1px; }
+
+
+.post-content .submenu { clear: both; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; margin-left: -20px; margin-right: -20px; margin-bottom: 50px; display: block; width: calc( 100% + 40px ); padding: 0 !important; }
+.post-content .submenu li { display: inline-block; padding: 6px 0; margin: 0 10px; }
+.post-content .submenu li:first-child { margin-left: 20px; }
+.post-content .submenu li:last-child { margin-right: 0; }
+.post-content .submenu li:before { display: none; }
+.post-content .submenu li a, .bovitett-parkapcsolat-elemzes .button a { display: inline-block; padding: 12px 24px; color: #000; text-transform: uppercase; font-size: 13px; font-weight: bold; letter-spacing: 2px; }
+.post-content .submenu li.active a, .post-content .submenu li:hover a, .bovitett-parkapcsolat-elemzes .button a { color: #fff; background-color: #8dbb10; }
+.bovitett-parkapcsolat-elemzes .button a { padding-top: 10px; padding-bottom: 10px; }
+
+.horoszkop-tablo .post-content .details { margin-bottom: 50px; }
+.horoszkop-tablo.nyitora .post-content .details { margin-bottom: 0; }
+.horoszkop-tablo .post-content .details h2 { margin-bottom: 50px; font-size: 24px; }
+
+
+
+.horoszkop-tablo .leptetok { margin-left: -20px; margin-right: -20px; display: block; width: calc( 100% + 40px ); padding: 0 20px; }
+.leptetok .elozo a, .leptetok .kovetkezo a { display: inline-block; vertical-align: middle; }
+.leptetok .elozo { float: left; }
+.leptetok .elozo a { }
+.leptetok .kovetkezo { float: right; }
+.leptetok .kovetkezo a {  }
+.leptetok .label { 
+    display: inline-block; text-decoration-skip: ink;
+    text-decoration: underline #db2626;
+    -webkit-text-decoration-skip: ink;
+    -webkit-text-decoration: underline #db2626;
+    -moz-text-decoration-skip: ink;
+    -moz-text-decoration-skip: ink;
+    -moz-text-decoration: underline #db2626;
+    color: #111; }
+
+.leptetok .nyil { position: relative; display: inline-block; width: 13px; height: 15px; padding-top: 3px; }
+
+
+
+.horoszkop-tablo .lepteto li { display: inline-block; margin: 0 4px; line-height: 100%; }
+.horoszkop-tablo .lepteto li:first-child { margin-left: 20px; float: left; }
+.horoszkop-tablo .lepteto li:last-child { margin-right: 20px; float: right;}
+.horoszkop-tablo .lepteto li:last-child a { margin-right: 0; }
+.horoszkop-tablo .lepteto li:before { display: none; }
+
+.horoszkop-tablo .lepteto li a { display: inline-block; padding: 6px 0; }
+.horoszkop-tablo .lepteto li.item-kovetkezo a  { display: inline-block; }
+
+
+.post-content > .box-title { font-size: 16px; text-transform: uppercase; width: calc( 100% + 40px); text-align: center; color: #1a005d; background: url(images/pattern.png) bottom center repeat-x; margin: 0 -20px 28px -20px; padding: 0 0 20px 0;}
+.box-content h1, .box-content h2, .box-content h3, .box-content h4, .box-content h5, .box-content h6 { font-family: "Open Sans", Helvetica, Arial, sans-serif; }
+
+
+
+
+/* /horoszkop/ aloldal gyűjtő */
+
+.horoszkop-tablo .gyujto-jegyek { width: 100%; display: block; }
+
+.gyujto-jegyek .jegy-details { cursor: pointer; }
+.gyujto-jegyek .jegy-details .jegy-kepe { width: 100%; display: block; text-align: center; }
+.gyujto-jegyek .jegy-details .jegy-kepe img { width: 60%; height: auto; }
+
+.gyujto-jegyek .jegy-details .jegy-neve { width: 100%; color: #111; font-size: 14px; letter-spacing: 2px; text-align: center; text-transform: uppercase; font-weight: 600; line-height: 115%; margin-bottom: 5px;}
+.gyujto-jegyek .jegy-details .jegy-idoszak { width: 100%; color: #868686; font-size: 10px; text-align: center; text-transform: uppercase; line-height: 115%; }
+.horoszkop-tablo.nyitora .jegy-idoszak { color: #111; }
+
+.horoszkop-elvalaszto { border-bottom: 1px solid #e8e8e8; margin-bottom: 60px; width: 100%; display: inline-block; min-height: 1px; }
+
+@media screen and (min-width: 601px) {
+    .horoszkop-tablo .post-content { padding-top: 0; }
+    .nyitora .gyujto-jegyek .jegy-details .jegy-kepe img { width: 53%; }
+    .horoszkop-tablo .gyujto-jegyek .jegy-details { width: 16.66666%; float: left; margin-bottom: 10px; padding: 10px 0; min-height: 155px; }
+    .horoszkop-tablo.nyitora .gyujto-jegyek .jegy-details { min-height: 110px; width: 25%; padding: 0; }
+}
+
+@media screen and (min-width: 481px) and (max-width: 600px) {
+    .horoszkop-tablo .gyujto-jegyek .jegy-details { width: 25.0%; float: left; margin-bottom: 10px; padding: 10px 0; min-height: 155px; }
+    .jegy-adatok { margin-right: 35px; }
+}
+
+@media screen and (max-width: 480px) {
+    .horoszkop-tablo .gyujto-jegyek .jegy-details { width: 33.33333%; float: left; margin-bottom: 10px; padding-bottom: 10px; min-height: 155px; }
+    .gyujto-jegyek .jegy-details .jegy-neve { font-size: 13px; letter-spacing: 0; }
+    
+    .col-eleme.jegy-adatok { clear: both; }
+    .jegy-adatok { margin-right: 30px; }
+    .jegy-adatok .title { margin-bottom: 8px; }
+}
+
+.horoszkop-tablo .gyujto-jegyek .jegy-details:hover, .horoszkop-tablo .gyujto-jegyek .jegy-details.active { background-color: #f3f3f3; }
+
+.horoszkop-tablo.nyitora h2 { display: none; }
+
+
+/* HOROSZKOP WIDGET */
+
+.horoszkop-widget .gyujto-jegyek {
+    width: 33.333333%;
+    float: left;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    min-height: 105px;
+}
+
+.horoszkop-widget .gyujto-jegyek .jegy-details .jegy-kepe img { width: 66%; }
+
+.horoszkop-widget .gyujto-jegyek:hover { background-color: #f3f3f3; }
+
+
+/* bovitett-parkapcsolat-elemzes */
+
+.bovitett-parkapcsolat-elemzes .select select { width: 100%; }
+.entry-content .bovitett-parkapcsolat-elemzes tr td, .entry-content .bovitett-parkapcsolat-elemzes tr th { border-top: 0; padding: 0 10px !important; text-transform: uppercase; }
+.bovitett-parkapcsolat-elemzes .eredmeny-kimutatas-tablo { border: 0; }
+.bovitett-parkapcsolat-elemzes .eredmeny-kimutatas-tablo th { border: 0; background: transparent; text-align: center; color: #868686; letter-spacing: 2px; font-weight: normal; font-size: 14px; text-transform: uppercase; }
+.bovitett-parkapcsolat-elemzes .eredmeny-kimutatas-tablo td { border: 0; }
+.bovitett-parkapcsolat-elemzes .gyujto-jegyek { display: inline-block; text-align: center; }
+.bovitett-parkapcsolat-elemzes .gyujto-jegyek .jegy-details { width: 50%; float: none; display: inline-block; }
+
+.bovitett-parkapcsolat-elemzes form { margin-bottom: 75px; }
+.narrow-title { display:none; text-transform: uppercase; color: #868686; text-align: center; }
+.bovitett-parkapcsolat-elemzes form td {  }
+.bovitett-parkapcsolat-elemzes .select .select-element { display: none; }
+
+.bovitett-parkapcsolat-elemzes .box.wide.own-result { margin-top: 40px; margin-bottom: 15px; }
+.bovitett-parkapcsolat-elemzes .box-content { line-height: 180%; }
+
+@media screen and (max-width: 726px) {
+    .bovitett-parkapcsolat-elemzes .gyujto-jegyek .jegy-details { width: 100%; }
+    .bovitett-parkapcsolat-elemzes form th, .run_horoscope_personal form th { display: none; }
+    .bovitett-parkapcsolat-elemzes form td, .run_horoscope_personal form td { display: inline-block; margin-bottom: 10px; width: 100%; text-align: center; }
+    .run_horoscope_personal form td input, .run_horoscope_personal form td select { width: 80% !important; text-align: center; font-size: 1em; }
+    .narrow-title { display:block; }
+    .bovitett-parkapcsolat-elemzes .button a { padding: 20px 30px;}
+    .bovitett-parkapcsolat-elemzes .eredmeny-kimutatas-tablo th { letter-spacing: 0; }
+}
+
+@media screen and (max-width: 600px) {
+    .bovitett-parkapcsolat-elemzes .eredmeny-kimutatas-tablo th { font-size: 10px; }
+}
+
+/**/
+.nev-elemzes { text-align: center; height: auto; padding: 2em 1.5em; background-color: #fff; }    
+
+
+/* SZEMELYRE SZABOTT HOROSZKOP */
+
+.run_horoscope_personal table { border: 0; }
+
+.run_horoscope_personal th {
+    color: #666666;
+    background: none;
+    letter-spacing: 2px;
+    font-size: 11px;
+}
+.run_horoscope_personal td, .run_horoscope_personal th {
+    border-top: 0; padding: 0 6px 0 0;
+}
+
+.run_horoscope_personal .select select, .run_horoscope_personal input {
+    border: 1px solid #c1b5cf;
+    background: transparent;
+    padding: 14px 14px;
+    font-size: 12px;
+    text-align: left;
+}
+
+.run_horoscope_personal .select select {
+    appearance:none;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    background-image: url("images/select_nyila_2x.png");
+    background-size: 39px 60px;
+    background-repeat: repeat-y;
+    background-position: 100% center;
+    padding: 14px 51px 14px 14px;
+}
+
+.run_horoscope_personal .select select::-ms-expand { /* for IE 11 */
+    display: none;
+}
+
+.run_horoscope_personal #year { width: 7em; }
+.run_horoscope_personal #month { width: 13em; }
+.run_horoscope_personal #day { width: 5em; }
+.run_horoscope_personal #hour { width: 5em; }
+.run_horoscope_personal #min { width: 5em; }
+
+.run_horoscope_personal #varos_id { text-align: left; width: 20em; }
+
+.box.wide.own-result .header .arrow-top { display: none; }
+.box.wide.own-result.nyitott .header .arrow-top { display: block; }
+.box.wide.own-result .header .arrow-bottom { display: block; }
+.box.wide.own-result.nyitott .header .arrow-bottom { display: none; }
+
+.box.wide.own-result .header {
+    width: calc( 100% + 40px );
+    display: inline-block;
+    background-color: #e5e2e9;
+    padding: 10px 20px;
+    margin: 0 -20px 40px -20px;
+    max-width: initial;
+    
+    font-size: 18px;
+    color: #1a005d;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    
+    cursor: pointer;
+}
+
+.box.wide.own-result h2 {
+    font-size: 15px;
+    color: #1a005d;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+}
+
+.box.wide.own-result .box-content { position: relative;  margin-bottom: 0px; height: 0; overflow: hidden; }
+.box.wide.own-result.nyitott .box-content { height: auto; transition: all 0.3s ease-in-out; margin-bottom: 70px; }
+
+.box.wide.own-result .pic-left { position: absolute; }
+.box.wide.own-result .content-right { width: 100%; box-sizing: border-box; padding-left: 95px; }

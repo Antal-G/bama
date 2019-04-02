@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2018.07.09., 17:39:05
+    Author     : tothpatony
+*/
+
+.mw-showrss {}
+.mw-showrss.feed-likebalaton_ajanlo.titlepic { width: 100%; margin-bottom: 15px; }
+.mw-showrss.feed-likebalaton_ajanlo.titlepic .container { border-bottom: 2px solid #00aeef; width: 100%; }
+.mw-showrss.feed-likebalaton_ajanlo.titlepic img { max-height: 35px; }
+.mw-showrss .feed-item {list-style: none;}
+.mw-showrss .feed-item .title {
+	font-size: 17px;
+    font-family: 'Montserrat-Medium', serif;
+    padding-top: 0px;
+    padding-bottom: 15px;
+	border-bottom: 1px solid #f0f0f0;
+	margin-bottom: 15px;
+    line-height: 113%;
+    display: block;
+    width: 100%;
+	color: #333;
+	transition: all 300ms ease-in-out;
+}
+.mw-showrss .feed-item .title:hover { color: #666; }
+.mw-showrss .feed-item:last-child .title {
+	border-bottom: 2px solid #00aeef;
+}
+
+.mw-showrss .feed-item .info-line {
+	font-size: 14px;
+	font-family: 'Montserrat-Regular', serif;
+	color: #666666;
+	line-height: 128%;
+	margin-bottom: 4px;
+}
+.mw-showrss .feed-item .info-line .second {
+	color: #00aeef;
+	padding-left: 0.5em;
+}
+.mw-showrss .feed-item .info-line .third {
+	padding-left: 0.5em;
+}
+.mw-showrss .feed-item .lead {
+	font-size: 13px;
+    line-height: 125%;
+    padding-bottom: 18px;
+}
+.mw-showrss .feed-item .thumbnail {
+	width: 100%;
+    background-size: cover;
+    height: 130px;
+    display: block;
+}
+
+
+
+
+/* MEGYEI SPECIALITÁS */
+@media only screen and (min-width: 981px) {
+	.et_pb_row .et_pb_column .mw-showrss { display: inline-block; padding-right: 23px; padding-left: 23px; padding-bottom: 0; }
+	.et_pb_row .et_pb_column:first-child .mw-showrss {}
+	.et_pb_row .et_pb_column:last-child .mw-showrss {}
+} 
+
+@media only screen and (max-width: 980px) {
+	.et_pb_row .et_pb_column .mw-showrss { display: inline-block; padding-left: 15px; padding-right: 15px;}
+}

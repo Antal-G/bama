@@ -1,0 +1,32 @@
+/* Divi module css (frontend) */
+#main-content .et_pb_video_offerer .et_pb_video_offerer_video_thumbnail_overlay {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	-moz-opacity:1.0;
+	-khtml-opacity: 1.0;
+	opacity: 1.0;
+	margin: -48px 0 0 -40px;
+	line-height: 14px;
+}
+#main-content .et_pb_video_offerer .et_pb_video_offerer_video_thumbnail_overlay img {
+	margin-bottom: 0;
+}
+#main-content .et_pb_video_offerer .et_pb_video_offerer_video_thumbnail:hover .et_pb_video_offerer_video_thumbnail_overlay {
+	-moz-opacity:0.7;
+	-khtml-opacity: 0.7;
+	opacity: 0.7;
+}
+
+/* Remove vertical line from the sidebar (content) */
+#main-content .container:before {
+	background: none!important;
+}
+
+.d-block {
+	display: block !important;
+}
+
+.tabs .offererContent.d-block {
+	padding: 0;
+}

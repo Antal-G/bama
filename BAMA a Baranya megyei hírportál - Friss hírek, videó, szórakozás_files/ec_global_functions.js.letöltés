@@ -1,0 +1,303 @@
+function ecore_enable(element) {
+    jQuery(element).prop('disabled', false);
+}
+
+function ecore_disable(element) {
+    jQuery(element).prop('disabled', true);
+}
+
+function ecore_show_element(element) {
+    jQuery(element).show();
+}
+
+function ecore_hide_element(element) {
+    jQuery(element).hide();
+}
+
+function ecore_set_html(element, html) {
+    if (!html) {
+        html = '';
+    }
+    jQuery(element).html(html);
+}
+
+function ecore_get_html(element) {
+    return jQuery(element).html();
+}
+
+function ecore_set_value(element, value) {
+    if (!value) {
+        value = '';
+    }
+    jQuery(element).val(value);
+}
+
+function ecore_get_value(element, value) {
+    if (!value) {
+        value = '';
+    }
+    return jQuery(element).val();
+}
+
+function ecore_check(element) {
+    jQuery(element).prop('checked', true);
+}
+
+function ecore_uncheck(element) {
+    jQuery(element).prop('checked', false);
+}
+
+function ecore_is_checked(element) {
+    return jQuery(element).is(':checked');
+}
+
+function ecore_has_class(element, classname) {
+    if (jQuery(element).hasClass(classname)) {
+        return true;
+    }
+    return false;
+}
+
+function ecore_add_class(element, classname) {
+    jQuery(element).addClass(classname);
+}
+
+function ecore_remove_class(element, classname) {
+    jQuery(element).removeClass(classname);
+}
+
+// Global ajax function
+function ecore_ajax(data, callbacks, special_options) {
+
+    if (!special_options) {
+        special_options = {};
+    }
+
+    var ajax_url = ajaxurl;
+    var method = 'POST';
+
+    if (special_options.hasOwnProperty('ajax_url')) {
+        ajax_url = special_options['ajax_url'];
+    }
+
+    if (special_options.hasOwnProperty('method')) {
+        method = special_options['method'];
+    }
+
+    var response = jQuery.ajax({
+        url: ajax_url,
+        data: data,
+        dataType: 'json',
+        type: method,
+        beforeSend: function (xhr, opts) {
+            if (callbacks.hasOwnProperty('beforeSend')) {
+                callbacks.beforeSend(xhr, opts);
+            }
+        },
+        success: function (response) {											// !!!Deprecated!!!
+            if (callbacks.hasOwnProperty('success')) {
+                callbacks.success(response);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {			// !!!Deprecated!!!
+            if (callbacks.hasOwnProperty('error')) {
+                callbacks.error(XMLHttpRequest, textStatus, errorThrown);
+            }
+        },
+        complete: function (response) {										// !!!Deprecated!!!
+            if (callbacks.hasOwnProperty('complete')) {
+                callbacks.complete(response);
+            }
+        }
+    }).done(function (response) {
+        if (callbacks.hasOwnProperty('done')) {
+            callbacks.done(response);
+        }
+    }).fail(function (response) {
+        if (callbacks.hasOwnProperty('fail')) {
+            callbacks.fail(response);
+        }
+    }).always(function (response, status, xhr) {
+        if (callbacks.hasOwnProperty('always')) {
+            callbacks.always(response, status, xhr);
+        }
+    });
+
+    return response;
+}
+
+// Setup select2
+function ecore_select2(selector, data) {
+
+    if (!data.hasOwnProperty('multiple')) {
+        data.multiple = true;
+    }
+
+    if (!data.hasOwnProperty('allow_clear')) {
+        data.allow_clear = false;
+    }
+
+    jQuery(selector).select2({
+        multiple: data.multiple,
+        placeholder: ecore_localization.placeholder,
+        language: ecore_localization.lang,
+        allowClear: data.allow_clear,
+        ajax: {
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+
+                var send_data = {keyword: params.term, page: params.page};
+
+                jQuery.each(data, function (index, value) {
+                    send_data[index] = value;
+                });
+
+                return send_data;
+            },
+            processResults: function (data, params) {
+
+                params.page = params.page || 1;
+                return {
+                    results: data.items,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        },
+        minimumInputLength: 0,
+        language: {
+
+            inputTooLong: function (args) {
+                var overChars = args.input.length - args.maximum;
+                return ecore_localization.too_long + overChars + ecore_localization.chars_unn;
+            },
+
+            inputTooShort: function (args) {
+                if (args.input.length == 0) {
+                    return ecore_localization.start_typing;
+                } else {
+                    var remainingChars = args.minimum - args.input.length;
+                    return remainingChars + " " + ecore_localization.chars_left;
+                }
+            },
+
+            maximumSelected: function (args) {
+                return args.maximum + " " + ecore_localization.max_articles;
+            },
+
+            loadingMore: function () {
+                return ecore_localization.loading;
+            },
+
+            noResults: function () {
+                return ecore_localization.no_results;
+            },
+
+            searching: function () {
+                return ecore_localization.searching;
+            },
+
+            errorLoading: function () {
+                return "..."
+            }
+        }
+
+    }).on('select2:select', function (e) {	// To keep the selection order!
+
+        var element = jQuery(this).find('[value="' + e.params.data.id + '"]');
+        jQuery(this).append(element);
+        jQuery(this).trigger('change');
+
+    }).on('select2:unselect', function () {
+        jQuery(this).on('select2:open', function () {
+            jQuery('.select2-search__field').val('');
+        });
+    });
+}
+
+function ecore_setup_select2(ajax_fill, element, action, type, runselect2) {
+
+    if (ajax_fill === true) {
+        runselect2();
+        return;
+    } else {
+        ajax_fill = false;
+    }
+
+    var ids = jQuery(element).val();
+
+    if (ids === '' || ids == null) {
+        runselect2();
+        return;
+    }
+
+    var data = {action: action, type: type, ids: ids};
+
+    var success = function (response) {
+        jQuery(element).html(response);
+        runselect2();
+    }, error = function () {
+        console.log('error');
+    };
+
+    var callbacks = {success: success, error: error};
+
+    ecore_ajax(data, callbacks);
+}
+
+// Setup Divi module select2 field
+function ecore_setup_divi_module_select2(element, element_with_ids, action, type, runselect2) {
+
+    var ids = jQuery(element_with_ids).val();
+
+    if (ids === '' || ids == null) {
+        runselect2();
+        return;
+    }
+
+    var data = { action: action, type: type, ids: ids };
+
+    var success = function( response ) {
+        jQuery(element).html( response );
+        runselect2();
+    },error = function() {
+        console.log( 'error' );
+    };
+
+    var callbacks = { success: success, error: error };
+
+    ecore_ajax( data, callbacks );
+}
+
+// Datepicker "today" fix
+jQuery(document).ready(function($) {
+
+    if( $.hasOwnProperty( 'datepicker' ) ) {
+        $.datepicker._gotoToday = function(id) {
+            var target = $(id);
+            var inst = this._getInst(target[0]);
+            if( this._get( inst, 'gotoCurrent' ) && inst.currentDay ) {
+                inst.selectedDay = inst.currentDay;
+                inst.drawMonth = inst.selectedMonth = inst.currentMonth;
+                inst.drawYear = inst.selectedYear = inst.currentYear;
+            } else {
+                var date			= new Date();
+                inst.selectedDay	= date.getDate();
+                inst.drawMonth		= inst.selectedMonth	= date.getMonth();
+                inst.drawYear		= inst.selectedYear		= date.getFullYear();
+                // the below two lines are new
+                this._setDateDatepicker( target, date );
+                this._selectDate( id, this._getDateDatepicker( target ) );
+            }
+            this._notifyChange(inst);
+            this._adjustDate(target);
+        }
+    }
+});

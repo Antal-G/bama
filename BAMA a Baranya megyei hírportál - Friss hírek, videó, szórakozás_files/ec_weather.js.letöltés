@@ -1,0 +1,177 @@
+(function ($) {
+    $(function () {
+        $('#loadingDivModul').hide();
+        $('#loadingDiv').hide();
+        $('.weatherSelect').on('change', function () {
+            $('#loadingDivModul').hide().ajaxStart( function() {
+                $(this).show();  // show Loading Div
+            } ).ajaxStop ( function(){
+                $(this).hide(); // hide loading div
+            });
+
+            var $this = $(this);
+            var promise = SITE.getWeather($this.val());
+
+            promise.done(function (result) {
+                changeDiviModuleTextValuesToSelectedCityTextValues(
+                    result,
+                    $this.closest('.enews-weather-module-first-row').next()
+                );
+            })
+        })
+    });
+
+    function changeDiviModuleTextValuesToSelectedCityTextValues(result, $container) {
+        var currentWeather = result['current'];
+        var weatherForecast = result['forecast'].slice(1, 5);
+
+        $container
+            .find('.enews-weather-module-current-temperature')
+            .text(addDegreeToTemerature(currentWeather['temperature']));
+
+        $container
+            .find('.enews-weather-module-max-temperature')
+            .text(addDegreeToTemerature(currentWeather['max']));
+
+        $container
+            .find('.enews-weather-module-min-temperature')
+            .text(addDegreeToTemerature(currentWeather['min']));
+
+        $container
+            .find('.enews-weather-module-current-icon')
+            .attr("src", currentWeather['icon']);
+
+        for (i = 1; i <= weatherForecast.length; i++) {
+            var index = i - 1;
+            var $day = $('.day-' + i);
+
+            $day
+                .find('.enews-weather-module-forecast-img')
+                .attr("src", weatherForecast[index]['icon']);
+
+            $day
+                .find('.enews-weather-module-forecast-max-temp')
+                .text(addDegreeToTemerature(weatherForecast[index]['max']));
+
+            $day
+                .find('.enews-weather-module-forecast-min-temp')
+                .text(addDegreeToTemerature(weatherForecast[index]['min']));
+        }
+    }
+
+    $(function () {
+        $('.selectLabel').on('click', function (e) {
+            e.preventDefault();
+            $('#loadingDiv').hide().ajaxStart( function() {
+                $(this).show();
+            } ).ajaxStop ( function(){
+                $(this).hide();
+            });
+
+            var $this = $(this).children('input');
+            var promise = SITE.getWeather($this.val());
+
+            $('.spanPlaceholder').text($this.val());
+            $('.selectCloseLabel').trigger('click');
+
+            promise.done(function (result) {
+                changeTextValuesToSelectedCityTextValues(
+                    result,
+                    $this.closest('.city').next()
+                );
+            });
+
+            $('.selectItems').removeClass('citiesBorder');
+        });
+
+        $('.selectExpandLabel').on('click', function () {
+            $('.selectItems').addClass('citiesBorder');
+        });
+
+        $('.selectCloseLabel').on('click', function () {
+            $('.selectItems').removeClass('citiesBorder');
+        });
+    });
+
+    function changeTextValuesToSelectedCityTextValues(result, $container) {
+        var currentWeather = result['current'];
+        var weatherForecast = result['forecast'];
+
+        $container
+            .find('.actualTemperature')
+            .text(addDegreeToTemerature(currentWeather['temperature']));
+
+        $container
+            .find('.actualTemperatureMax')
+            .text(addDegreeToTemerature(currentWeather['max']));
+
+        $container
+            .find('.actualTemperatureMin')
+            .text(addDegreeToTemerature(currentWeather['min']));
+
+        $container
+            .find('.actualTemperatureText')
+            .text(currentWeather['skies']);
+
+        $container
+            .find('.actualTemperatureIkon')
+            .attr("src", currentWeather['icon']);
+
+        $container
+            .find('.rain')
+            .text(addMmToRain(currentWeather['rain']));
+
+        $container
+            .find('.airPressure')
+            .text(addHpaToAirPressure(currentWeather['airPressure']));
+
+        $container
+            .find('.wind')
+            .text(addKmhToWind(currentWeather['wind']));
+
+        $container
+            .find('.windDirection')
+            .text(currentWeather['windDirection']);
+
+        for (i = 1; i <= weatherForecast.length; i++) {
+            var index = i - 1;
+            var $day = $('.day-' + i);
+
+            $day
+                .find('.oneDayForecastImg')
+                .attr("src", weatherForecast[index]['icon']);
+
+            $day
+                .find('.oneDayForecastMax')
+                .text(addDegreeToTemerature(weatherForecast[index]['max']));
+
+            $day
+                .find('.oneDayForecastMin')
+                .text(addDegreeToTemerature(weatherForecast[index]['min']));
+
+            $day
+                .find('.oneDayForecastRain')
+                .text(addMmToRain(weatherForecast[index]['rain']));
+
+            $day
+                .find('.oneDayForecastWind')
+                .text(addKmhToWind(weatherForecast[index]['wind']));
+        }
+    }
+
+    function addDegreeToTemerature(temperature) {
+        return String(temperature).concat('°');
+    }
+
+    function addMmToRain(temperature) {
+        return String(temperature).concat(' mm');
+    }
+
+    function addHpaToAirPressure(temperature) {
+        return String(temperature).concat(' hPa');
+    }
+
+    function addKmhToWind(temperature) {
+        return String(temperature).concat(' km/h');
+    }
+})(jQuery);

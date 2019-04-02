@@ -1,0 +1,315 @@
+var recaptchaLoaded = function () {
+    (function ($) {
+        function Voting(container) {
+            this.container = container;
+            this.userIdentifier = 'eweb-uuid';
+            this.votingOptions = this.container.data('votingOptions');
+            this.localization = this.votingOptions.localization;
+            this.voted = false;
+
+            this.errors = {
+                localStorageNotAvailable: 'Local storage not available! Please exit incognito mode or use another browser!'
+            };
+
+            this.load = function () {
+                $.ajax({
+                    method: 'GET',
+                    url: this.getVotesUrl(),
+                    beforeSend: $.proxy(function (xhr) {
+                        this.beforeVotingAppendWpUserNonce(xhr);
+                    }, this)
+                }).done($.proxy(function (response) {
+                    this.container.html(' ' +
+                        '<header>' +
+                        '<a href="">' +
+                        '<span class="title textUppercase">'+ this.votingOptions.alternativeHeader +'</span>' +
+                        '</a>' +
+                        '<span class="title textUppercase"></span>' +
+                        '<h1 class="question hidden"></h1>' +
+                        '</header>' +
+                        '<form class="content">' +
+                        '</form>'
+                    );
+                    this.loadingDone(response);
+                }, this));
+            };
+
+            this.getVotesUrl = function () {
+                return this.votingOptions.votesUrl + '/' + this.votingOptions.id + '/' + this.getUserId();
+            };
+
+            this.loadingDone = function (response) {
+                if (!this.isResponseValid(response)) {
+                    this.setErrorIfResponseHasErrorProperty(response);
+                    return;
+                }
+                this.renderVoting(response);
+                this.setVotingWatchers();
+            };
+
+            this.setErrorIfResponseHasErrorProperty = function (response) {
+                if (response.hasOwnProperty('error')) {
+                    this.setError(response.error);
+                }
+            };
+
+            this.renderVoting = function (response) {
+                var votingHtml = '';
+                if (this.hasVoted(response.options)) {
+                    this.setVotingName(response.name);
+                    votingHtml += this.getResultsHtml(response.options);
+                    votingHtml += this.getVoteCountHtml(response.numberOfAllVotes);
+                    votingHtml += this.getThankYouVoteHtml();
+                    this.setVotingContent(votingHtml);
+                    return;
+                }
+
+                this.hideContainer();
+                this.setVotingName(response.name);
+                var recaptchaId = this.getRandomId();
+                votingHtml += this.getOptionsHtml(response.options);
+                votingHtml += this.getRecaptchaHtml(recaptchaId);
+                votingHtml += this.getErrorContainer();
+                votingHtml += this.getVotingButtonHtml();
+                this.setVotingContent(votingHtml);
+                this.renderRecaptcha(recaptchaId);
+                this.showContainer();
+            };
+
+            this.setVotingName = function (name) {
+                this.container.find('.question').html(name).removeClass('hidden');
+            };
+
+            this.hasVoted = function (options) {
+                for (var i = 0, len = options.length; i < len; i++) {
+                    var option = options[i];
+
+                    if (option.hasOwnProperty('count')) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+
+            this.getOptionsHtml = function (options) {
+                var optionsHtml = '';
+                for (var i = 0, len = options.length; i < len; i++) {
+                    var option = options[i];
+
+                    optionsHtml +=
+                        '<label>' +
+                        '<input type="radio" name="option" value="' + option.id + '" class="voting-option">' +
+                        '<span class="check"></span>' +
+                        '<span class="text">' + option.name + '</span>' +
+                        '</label>';
+                }
+                return '<div class="opportunities">' + optionsHtml + '</div>';
+            };
+
+            this.getResultsHtml = function (options) {
+                var optionsHtml = '';
+                for (var i = 0, len = options.length; i < len; i++) {
+                    var option = options[i];
+
+                    optionsHtml +=
+                        '<div class="answer">' +
+                        '<span class="resultText">' + option.name + '</span>' +
+                        '<div class="resultNumbers">' +
+                        '<span class="progressNumber">' + option.percent + '% </span>' +
+                        '</div>' +
+                        '<div class="progress">' +
+                        '<div class="progress-bar" style="width: ' + option.percent + '%;">' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+                return '<div class="opportunities">' + optionsHtml + '</div>';
+            };
+
+            this.getRecaptchaHtml = function (recaptchaId) {
+                return '' +
+                    '<div class="reCaptcha">' +
+                    '<div id="' + recaptchaId + '" class="recaptcha"></div>' +
+                    '</div>';
+            };
+
+            this.getErrorContainer = function (message) {
+                var msg = message || '';
+                return '<div class="voting-error ' + ( msg ? '' : 'hidden' ) + '">' + msg + '</div>';
+            };
+
+            this.getVotingButtonHtml = function () {
+                return '' +
+                    '<div class="buttonWrapper">' +
+                    '<input type="submit" class="textUppercase votingButton" value="Szavazok">' +
+                    '</div>';
+            };
+
+            this.getVoteCountHtml = function (numberOfAllVotes) {
+                return '';
+            };
+
+            this.getRandomId = function () {
+                return Math.random().toString(36).substr(2, 10);
+            };
+
+            this.setVotingContent = function (html) {
+                this.container.find('.content').html(html);
+            };
+
+            this.renderRecaptcha = function (recaptchaId) {
+                grecaptcha.render(recaptchaId, {
+                    'sitekey': this.votingOptions.recaptchaSiteKey,
+                    'callback': $.proxy(function () {
+                        var $window = $(window);
+                        var $submitButton = this.container.find('.votingButton');
+                        $window.animate({
+                            scrollTop: $submitButton.offset().top - $window.height() + $submitButton.outerHeight() + 20
+                        });
+                        this.removeErrors();
+                    }, this)
+                });
+            };
+
+            this.showContainer = function () {
+                this.container.removeClass('hidden');
+            };
+
+            this.hideContainer = function () {
+                this.container.addClass('hidden');
+            };
+
+            this.setVotingWatchers = function () {
+                this.container.on('submit', 'form', $.proxy(function (e) {
+                    e.preventDefault();
+                    this.submit(e.target);
+                }, this));
+
+                this.container.on('change', '.voting-option', $.proxy(function () {
+                    this.removeErrors();
+                }, this));
+            };
+
+            this.getThankYouVoteHtml = function () {
+                return '<div class="thankYouVote">' +
+                    '<div class="square">' +
+                    '<span class="squarePipe"></span>' +
+                    '</div>' +
+                    '<span class="voteText">Köszönjük szavazatát!</span>' +
+                    '</div>';
+            };
+
+            this.submit = function (formElement) {
+                this.removeErrors();
+                var formData = this.getFormData(formElement);
+
+                this.modifyFormElementsBeforeVoting();
+                $.ajax({
+                    method: 'POST',
+                    url: this.getVotesUrl(),
+                    beforeSend: $.proxy(function (xhr) {
+                        this.beforeVotingAppendWpUserNonce(xhr);
+                    }, this),
+                    data: formData
+                }).done($.proxy(function (response) {
+                    this.restoreFormElementsAfterVoting();
+                    this.votingDone(response);
+                }, this)).fail($.proxy(function (response) {
+                    this.restoreFormElementsAfterVoting();
+                    this.ajaxFailed(response);
+                }, this));
+            };
+
+            this.modifyFormElementsBeforeVoting = function () {
+                this.container.find('.votingButton').val('Szavazat küldése folyamatban...').prop('disabled', true);
+            };
+
+            this.restoreFormElementsAfterVoting = function () {
+                this.container.find('.votingButton').val('Szavazok').prop('disabled', false);
+            };
+
+            this.beforeVotingAppendWpUserNonce = function (xhr) {
+                xhr.setRequestHeader('X-WP-Nonce', this.votingOptions.votingNonce);
+            };
+
+            this.votingDone = function (response) {
+                if (!this.isResponseValid(response)) {
+                    this.setErrorIfResponseHasErrorProperty(response);
+                    return;
+                }
+                this.renderVoting(response);
+            };
+
+            this.isResponseValid = function (response) {
+                return response.hasOwnProperty('name') && response.hasOwnProperty('options');
+            };
+
+            this.ajaxFailed = function (response) {
+                console.log('ajax error', response);
+                // this.setVotingContent('ajax error');
+            };
+
+            this.getFormData = function (formElement) {
+                var formData = {};
+                $.each($(formElement).serializeArray(), function (_, kv) {
+                    if (formData.hasOwnProperty(kv.name)) {
+                        formData[kv.name] = $.makeArray(paramObj[kv.name]);
+                        formData[kv.name].push(kv.value);
+                    }
+                    else {
+                        formData[kv.name] = kv.value;
+                    }
+                });
+                return formData;
+            };
+
+            this.removeErrors = function () {
+                this.container.find('.voting-error').addClass('hidden').html('');
+            };
+
+            this.setError = function (error) {
+                this.container.find('.voting-error')
+                    .text(error)
+                    .removeClass('hidden');
+            };
+
+            this.getUserId = function () {
+                if (!localStorage.getItem(this.userIdentifier)) {
+                    if (!this.isLocalStorageNameSupported()) {
+                        this.setVotingContent(this.getErrorContainer(this.localization.localStorageNotAvailable));
+                        return;
+                    }
+                    this.setUserId();
+                }
+                return localStorage.getItem(this.userIdentifier);
+            };
+
+            this.setUserId = function () {
+                localStorage.setItem(this.userIdentifier, uuidv4());
+            };
+
+            this.isLocalStorageNameSupported = function () {
+                try {
+                    var testKey = 'testKey';
+                    localStorage.setItem(testKey, 'testValue');
+                    localStorage.removeItem(testKey);
+                    if (window.hasOwnProperty('localStorage')) {
+                        return window.hasOwnProperty('localStorage');
+                    } else {
+                        return "localStorage" in window;
+                    }
+                } catch (error) {
+                    return false;
+                }
+            };
+        }
+
+        $(document).ready(function () {
+            $(".vote").each(function () {
+                var voting = new Voting($(this));
+                voting.load();
+            });
+        });
+    })(jQuery);
+};
+

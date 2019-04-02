@@ -1,0 +1,12 @@
+<svg id="stripes" xmlns="http://www.w3.org/2000/svg" width="300" height="237" viewBox="0 0 300 237">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffdf00;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path class="cls-1" d="M2596,3521.52l892.52-160.53,7.51,41.66-892.52,160.53Z" transform="translate(-3014 -3361)"/>
+  <path id="Rectangle_869_copy" data-name="Rectangle 869 copy" class="cls-1" d="M2695.95,3556.34l892.52-160.52,7.51,41.66-892.52,160.53Z" transform="translate(-3014 -3361)"/>
+</svg>

@@ -1,0 +1,91 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2018.06.12., 17:39:05
+    Author     : tothpatony
+*/
+
+@font-face {
+    font-family: roboto-condensed;
+    font-weight: normal;
+    src: url("/wp-content/plugins/mw-russia2018/fonts/Roboto-Condensed.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: roboto-boldcondensed;
+    font-weight: normal;
+    src: url("/wp-content/plugins/mw-russia2018/fonts/Roboto-BoldCondensed.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: roboto-regular;
+    font-weight: normal;
+    src: url("/wp-content/plugins/mw-russia2018/fonts/Roboto-Regular.ttf") format("truetype");
+}
+
+.russia2018 {font-family: roboto-condensed;}
+.russia2018, .menetrend .nap-header, .menetrend .meccsek, .meccsek .meccs { width: 100%; display: block; float: left; }
+.russia2018 .menetrend {}
+.menetrend .nap-header {text-transform: uppercase; margin-bottom: 10px; font-size: 11px; font-family: OpenSans-Semibold; line-height: 11px;}
+.nap-header .part-1 {}
+.nap-header .part-2 { color: #b0b0b0; }
+.russia2018 .highlight { background-color: #d51721; color: #fff; }
+.russia2018 .bg-light-gray { background-color: #f0f0f0; color: #333; }
+.meccs { background-color: transparent; margin-bottom: 10px; border: 1px solid #f0f0f0; line-height: 26px; }
+
+.meccs.status-ready { background-color: #f0f0f0; }
+
+.meccs .idopont { font-size: 10px; font-weight: bold; width:10%; box-sizing: border-box; float: left; min-height: 1px; text-align: center; }
+.idopont .highlight { line-height: 16px; padding: 0 5px; display: inline-block; }
+.meccs .csapat {width:37%; box-sizing: border-box; float: left;}
+.meccs .eredmeny { font-size: 12px; font-weight: bold; width:16%; box-sizing: border-box; float: left; text-align: center; min-height: 1px; }
+.eredmeny .highlight, .eredmeny .bg-light-gray { line-height: 20px; padding: 0 8px; display: inline-block; }
+.csapat.home-name, .csapat.away-name { font-size: 14px; font-weight: bold; }
+.csapat.home-name {text-align: left; padding: 0 0 0 10px;}
+.csapat.away-name {text-align: right; padding: 0 10px 0 0;}
+
+.meccs.has-elevens .idopont, .meccs.status-ended .idopont {display: none;}
+.meccs.has-elevens .csapat, .meccs.status-ended .csapat { width: 36%; font-size: 11px;}
+.meccs.has-elevens .eredmeny, .meccs.status-ended .eredmeny { width: 27%; font-size: 12px;}
+
+
+
+.tabella .group-header, .tabella .csapatok, .csapatok .team { width: 100%; display: block; float: left; }
+.russia2018 .tabella {}
+.tabella .group-header { background-color: #3680b4; color: #fff; text-align: center; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+.tabella .team {line-height: 27px;}
+
+.tabella .team > div {float: left; width: 12%; text-align: center; font-size: 12px; line-height: 16px; padding: 6px 5px; box-sizing: border-box; }
+.tabella .team .csapat-info {width: 28%; font-size: 13px; font-weight: bold; line-height: 20px; }
+.tabella .team .csapat-info img {width: 20px; height: auto; border: 1px solid #e0e1e4; vertical-align: middle; display: inline-block; }
+.tabella .team .csapat-info .shortname { display: inline-block; width: 31px; text-align: left; }
+.tabella .team .oszlop_M {} 
+.tabella .team .oszlop_GY {} 
+.tabella .team .oszlop_D {} 
+.tabella .team .oszlop_V {} 
+.tabella .team .oszlop_GK {} 
+.tabella .team .oszlop_P { font-weight: bold; } 
+
+.tabella .team.csapat-header {border: 1px solid #f0f0f0; font-family: roboto-regular; }
+.tabella .team.csapat-header > div {padding-top: 4px; padding-bottom: 4px; line-height: 20px;}
+.tabella .team.csapat-header .csapat-info {
+    text-align: center;
+	background-color:  #f0f0f0;
+}
+
+.tabella .csapatok .menetrend { border-top: 1px solid #f0f0f0; display: inline-block; padding-top: 10px; }
+
+/* MEGYEI SPECIALITÁS */
+
+@media only screen and (min-width: 981px) {
+	.et_pb_row .et_pb_column .russia2018 { display: inline-block;}
+	.et_pb_row .et_pb_column:first-child .russia2018 {padding-right: 23px;}
+	.et_pb_row .et_pb_column:last-child .russia2018 {padding-left: 23px;}
+} 
+
+@media only screen and (max-width: 980px) {
+	.et_pb_row .et_pb_column .russia2018 { display: inline-block; padding-left: 15px; padding-right: 15px;}
+}

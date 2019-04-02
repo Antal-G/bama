@@ -1,0 +1,140 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#container {
+	position: relative;
+	width: 300px;
+	height: 600px;
+	overflow: hidden;
+	background: #ffffff;
+	border: 1px solid black;
+	box-sizing: border-box;
+}
+
+#bg {
+	position: absolute;
+	animation: bg_ani 15s 2;
+}
+@keyframes bg_ani {
+
+}
+
+#stripes {
+	position: absolute;
+	top: 143px;
+	animation: stripes_ani 15s 2;
+}
+@keyframes stripes_ani {
+	0% { opacity: 1; }
+	23% { top: 143px; transform: scale(1); }
+	26% { top: 900px; transform: scale(18); }
+	87% { top: 900px; transform: scale(18); }
+	90% { top: 143px; transform: scale(1); }
+	100% { opacity: 1; }
+}
+
+#logo1 {
+	position: absolute;
+	animation: logo1_ani 15s 2;
+}
+@keyframes logo1_ani {
+	23% { opacity: 1; }
+	26% { opacity: 0; }
+	87% { opacity: 0; }
+	90% { opacity: 1; }
+}
+
+#logo2 {
+	position: absolute;
+	animation: logo2_ani 15s 2 forwards;
+}
+@keyframes logo2_ani {
+	0% { opacity: 0; }
+	23% { opacity: 0; }
+	26% { opacity: 1; }
+	87% { opacity: 1; }
+	90% { opacity: 0; }
+	100% { opacity: 0; }
+}
+
+#cta1 {
+	position: absolute;
+	animation: cta_ani 15s 2;
+}
+@keyframes cta1_ani {
+	23% { opacity: 1; }
+	26% { opacity: 0; }
+	87% { opacity: 0; }
+	90% { opacity: 1; }
+}
+#cta2 {
+	position: absolute;
+	animation: cta2_ani 15s 2 forwards;
+}
+@keyframes cta2_ani {
+	0% { opacity: 0; }
+	23% { opacity: 0; }
+	26% { opacity: 1; }
+	87% { opacity: 1; }
+	90% { opacity: 0; }
+	100% { opacity: 0; }
+}
+
+#cars {
+	position: absolute;
+	animation: cars_ani 15s 2;
+}
+@keyframes cars_ani {
+	0% { opacity: 1; }
+	20% { opacity: 1; }
+	23% { opacity: 0; }
+	87% { opacity: 0; }
+	90% { opacity: 1; }
+	100% { opacity: 1; }
+}
+
+#tx1 {
+	position: absolute;
+	animation: tx1_ani 15s 2 forwards;
+}
+@keyframes tx1_ani {
+	0% { opacity: 1; }
+	20% { opacity: 1; }
+	23% { opacity: 0; }
+	91% { opacity: 0; }
+	94% { opacity: 1; }
+	100% { opacity: 1; }
+}
+
+#tx2 {
+	position: absolute;
+	animation: tx2_ani 15s 2 forwards;
+}
+@keyframes tx2_ani {
+	0% { opacity: 0; }
+	23% { opacity: 0; }
+	26% { opacity: 1; }
+	85% { opacity: 1; }
+	88% { opacity: 0; }
+	100% { opacity: 0; }
+}
+
+#bull {
+	position: absolute;
+	animation: bull_ani 15s 2 forwards;
+}
+@keyframes bull_ani {
+	0% { opacity: 0; }
+	27% { opacity: 0; }
+	30% { opacity: 1; }
+	83% { opacity: 1; }
+	86% { opacity: 0; }
+	100% { opacity: 0; }
+}
+
+

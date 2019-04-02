@@ -1,0 +1,52 @@
+(function ($) {
+
+    var breakingTitle;
+
+    $(document).ready(function () {
+        var $container = $('.breaking-news-container');
+        breakingTitle = $container.data('title');
+        if (!$container.length) {
+            return;
+        }
+        var url = $container.data('url');
+        if (!url) {
+            return;
+        }
+        fetchBreakingNews(url, function (res) {
+            var dom = '';
+            $.each(res, function (i, val) {
+                dom += getDom(val);
+            });
+            displayBreakingElements($container, dom);
+        });
+    });
+
+    function fetchBreakingNews(url, cb) {
+        $.ajax({
+            url: url,
+            method: 'GET'
+        }).success(function (res) {
+            cb(res);
+        });
+    }
+
+    function getDom(val) {
+
+        return '<a href="' + val.url + '" class="breaking-news-url">' +
+            getTitle() +
+            '<div class="breaking-news-content">' + val.name + '</div></a>';
+    }
+
+    function getTitle() {
+
+        if (breakingTitle === undefined) {
+            return '';
+        }
+
+        return '<div class="breaking-news-title">' + breakingTitle + '</div>';
+    }
+
+    function displayBreakingElements($container, elements) {
+        $container.html('<div class="breaking-news-background"></div>' + elements);
+    }
+})(jQuery);

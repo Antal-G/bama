@@ -1,0 +1,154 @@
+var goaAdverticum = goaAdverticum || {};
+
+goaAdverticum.isMobile = function () {
+    return jQuery("body").outerWidth(true) < 641;
+};
+
+goaAdverticum.getZoneElements = function () {
+    return this.orderElements(this.getNonOrderedElements());
+};
+
+goaAdverticum.getNonOrderedElements = function () {
+    return jQuery(".goaZone");
+};
+
+goaAdverticum.orderElements = function ($elements) {
+    goaAdverticum.normalizePriorityOfElements($elements);
+
+    var priorityGroupedElements = [];
+    $elements.each(function (i, e) {
+        var $el = jQuery(e);
+        var priority = $el.data('priority');
+
+        if (priorityGroupedElements[priority] === undefined) {
+            priorityGroupedElements[priority] = [];
+        }
+        priorityGroupedElements[priority].push($el);
+    });
+
+    var orderedElements = [];
+    jQuery.each(priorityGroupedElements, function (priority, elements) {
+        jQuery.each(elements, function (i, $el) {
+            orderedElements.push($el);
+        });
+    });
+
+    return orderedElements;
+};
+
+goaAdverticum.normalizePriorityOfElements = function ($elements) {
+    $elements.each(function (i, e) {
+        var $el = jQuery(e);
+        var priority = $el.data('priority');
+
+        if (priority !== parseInt(priority, 10)) {
+            priority = 100;
+            $el.data('priority', priority);
+        }
+    });
+};
+
+goaAdverticum.removeEmptyAd = function ($el) {
+    var event = jQuery.Event('preRemove.goa3');
+    $el.trigger(event);
+    if (event.isDefaultPrevented()) {
+        return;
+    }
+
+    var removeClosestSelector = $el.data('removeClosest');
+    if (removeClosestSelector) {
+        $el.closest(removeClosestSelector).remove();
+    }
+
+    $el.trigger('postRemove.goa3');
+};
+
+goaAdverticum.showWrapper = function ($el) {
+
+    var event = jQuery.Event('preShow.goa3');
+    $el.trigger(event);
+    if (event.isDefaultPrevented()) {
+        return;
+    }
+
+    $el.closest('.et_pb_module, .banner-container').removeClass('hidden d-none');
+    $el.trigger('postShow.goa3');
+};
+
+goaAdverticum.removeStrategies = {
+    'forced': function (el) {
+        return true;
+    }
+};
+
+goaAdverticum.shouldBeSentStrategies = {
+    'default': function (el) {
+        var isMobile = goaAdverticum.isMobile();
+        if (isMobile && el.hasClass('goaMobile')) {
+            return true;
+        }
+        return !isMobile && el.hasClass('goaDesktop');
+    }
+};
+
+goaAdverticum.initZones = function (goa3) {
+
+    var blocks = [];
+
+    jQuery.each(this.getZoneElements(), jQuery.proxy(function (i, el) {
+
+        var $el = jQuery(el);
+
+        if (goaAdverticum.shouldBeSentStrategies.default($el)) {
+            var block = {
+                node: $el,
+                id: $el.attr('id'),
+                p: $el.data('priority')
+            };
+
+            blocks.push(block);
+            $el.trigger('sendGoa3', {id: block.id, priority: block.p});
+        }
+
+        var removeStrategy = $el.data('removeStrategy');
+
+        if (typeof removeStrategy === 'undefined') {
+            return true;
+        }
+
+        if (goaAdverticum.removeStrategies[removeStrategy]($el)) {
+            goaAdverticum.removeEmptyAd($el);
+        }
+    }, this));
+
+    goa3.invocation(blocks, function (loadedZones) {
+        jQuery.each(blocks, function (index, block) {
+            if (isIdLoaded(block.id, loadedZones)) {
+                goaAdverticum.showWrapper(block.node);
+            } else {
+                goaAdverticum.removeEmptyAd(block.node);
+            }
+        });
+    });
+
+    function isIdLoaded(zoneId, loadedZones) {
+        var zoneIdFound = false;
+        jQuery.each(loadedZones, function (i, zone) {
+            if (zone.zone === parseInt(zoneId)) {
+                zoneIdFound = true;
+                return true;
+            }
+        });
+        return zoneIdFound;
+    }
+};
+
+jQuery(function () {
+    if (!window.goAdverticum3) {
+        return;
+    }
+
+    window.goAdverticum3.onReady(function (goa3) {
+        goaAdverticum.initZones(goa3);
+    });
+});
